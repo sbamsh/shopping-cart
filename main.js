@@ -20,8 +20,44 @@ function ready() {
     input.addEventListener('change', quantitychange)
 }
 
-
+    var addToCartButtons = document.getElementsByClassName('shop-item-button');
+    for (var i = 0; i < addToCartButtons.length; i++) {
+        var button = addToCartButtons[i]
+        button.addEventListener('click', addtocartClicked)
+    }
 }
+
+
+
+function addtocartClicked(event) {
+    var button = event.target;
+    var shopitem = button.parentElement.parentElement
+    var title = shopitem.getElementsByClassName('shop-item-title')[0].innerText
+    var price = shopitem.getElementsByClassName('shop-item-price')[0].innerText
+    var imagesrc = shopitem.getElementsByClassName('shop-item-image')[0].src
+    additemToCart(title,price,imagesrc)
+}
+
+
+function additemToCart(title,price,imagesrc) {
+    var cartRow = document.createElement('div');
+    var cartitem = document.getElementsByClassName('cart-items')[0]
+    var cartrowContents = `
+    <div class="cart-item cart-column">
+    <img  class="cart-item-image" src="images/Shirt.png" width="100" height="100">
+    <span class="cart-item-title">T-shirt</span>
+</div>
+<span class="cart-price cart column">$19.99</span>
+<div class="cart-quantity cart-column">
+    <input class="cart-quantity-input" type="number" value="1">
+    <button class="btn btn-danger" type="button">Remove</button>
+</div>
+    `
+    cartRow.innerHTML = cartrowContents;
+    cartitem.append(cartRow);
+}
+
+
 
 function quantitychange(event) {
     var input = event.target;
